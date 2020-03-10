@@ -1,0 +1,11 @@
+﻿@model IEnumerable<sp_VideoRental.Models.SELECTGenres_Result>
+
+<div style="position:relative; width:100%; height:100%">
+    @*<span class="moviegenrefk" style="display:block">@ViewBag.GenreId</span>*@
+    <select class="SelectGenre">
+        @foreach (var item in Model)
+        {
+            <option disabled value="@item.GenreID">@item.GenreName</option>
+        }
+    </select>
+</div>

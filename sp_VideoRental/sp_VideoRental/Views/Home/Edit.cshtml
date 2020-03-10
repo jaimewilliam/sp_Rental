@@ -1,0 +1,159 @@
+﻿@model sp_VideoRental.Models.DisplayRecords
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>DisplayRecords_Result</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.RentalID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RentalID, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                @Html.ValidationMessageFor(model => model.RentalID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CustomerFK, new { @class = "form-control", @style = "display:block;" })
+                <span class="customerid" style="display:block">@Model.CustomerFK</span>
+                @{Html.RenderAction("CustomerList", "Home");}
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateRented, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateRented, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => model.DateRented, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-horizontal">
+        <p style="float:right">
+            @*@Html.ActionLink("Add New", "Create")*@
+            <input id="addmovie" type="button" value="Add Movie" />
+        </p>
+        <table class="table addclone">
+            <tr>
+                <th>
+                    @Html.Label("Movie Name")
+                </th>
+                <th>
+                    @Html.Label("Genre Name")
+                </th>
+                <th>
+                    @Html.Label("Date Returned")
+                </th>
+                <th></th>
+            </tr>
+            @if (Model.SELECTRented != null && Model.SELECTRented.Count > 0)
+            {
+                @*@foreach (var item in Model)*@
+                for (int i = 0; i < Model.SELECTRented.Count; i++)
+                {
+                    <tr class="clonetr">
+                        <td>
+                            @*@Html.DisplayFor(modelItem => modelItem.SELECTRented[i].MovieName)*@
+                            @Html.TextBoxFor(movieID => movieID.SELECTRented[i].MovieID, new { @class = "form-control movieidholder", @style = "display:block;" })
+                            <span class="movieid" style="display:block">@Model.SELECTRented[i].MovieID</span>
+                            @{Html.RenderAction("DdlMovies", "Home");}
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => modelItem.SELECTRented[i].GenreName)*@
+                            <span class="moviegenrefk" style="display:block">@Model.SELECTRented[i].GenreFK</span>
+                            @{Html.RenderAction("DdlGenres", "Home", new { movieId = Model.SELECTRented[i].MovieID });}
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => modelItem.SELECTRented[i].DateReturned)*@
+                            @Html.EditorFor(modelItem => modelItem.SELECTRented[i].DateReturned, new { htmlAttributes = new { @type = "date" } })
+                        </td>
+                        <td>
+                            @Html.ActionLink("Remove", "Remove", new { rentedID = Model.SELECTRented[i].RentedID, rentalFK = Model.SELECTRented[i].RentalFK })
+                        </td>
+                        <td style="display:none">
+                            @Html.TextBoxFor(rentedid => rentedid.SELECTRented[i].RentedID, new { @class = "form-control", @style = "display:none;" })
+
+                        </td>
+                    </tr>
+                }
+             }
+             else
+             {
+                    <tr class="clonetr">
+                        <td>
+                            <span class="movieid">0</span>
+                            @{Html.RenderAction("DdlMovies", "Home");}
+                        </td>
+                        <td>
+                            @{Html.RenderAction("DdlGenres", "Home", new { movieId = 0 });}
+                        </td>
+                        <td>
+                            <input class="text-box single-line" data-val="true" data-val-date="The field Date Returned must be a date." id="item_DateReturned" name="item.DateReturned" type="date" value="">
+                        </td>
+                        <td>
+                            @*@Html.ActionLink("Remove", "Remove", new { movieId = 0})*@
+                        </td>
+                    </tr>
+             }
+
+        </table>
+        <input style="display:block" id="newMovieIdholder" type="text" name="newMovieIdholder" value="" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready(function () {
+        //$(".SelectMovie").val($('.movieid').text());
+        //**Display MovieName based on customer rented MovieID!
+        var movie = $(".SelectMovie");
+        for (var i = 0; i < movie.length; i++) {
+            var movieid = $(movie[i]).parent().parent().find(".movieid").text();
+            $(movie[i]).val(movieid);
+        }
+
+        //**Display GenreName based on Movie GenreFK!
+        var genre = $(".SelectGenre");
+        for (var i = 0; i < genre.length; i++) {
+            var gerefk = $(genre[i]).parent().parent().find('.moviegenrefk').text();
+            $(genre[i]).val(gerefk);
+        }
+
+        //Add new rental movies
+        $("#addmovie").on("click", function () {
+            var tr = $(".clonetr");
+            var newtr = $(tr[0]).clone();
+            $(newtr).appendTo(".addclone");
+            $(newtr).find('.movieid').text('0');
+            $(newtr).find('.SelectMovie').val(0);
+        });
+    });
+</script>

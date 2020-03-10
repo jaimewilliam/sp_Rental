@@ -1,0 +1,37 @@
+﻿@model IEnumerable<sp_VideoRental.Models.SELECTMovies_Result>
+
+<div style="position:relative; width:100%; height:100%">
+    <select class="SelectMovie" onchange="getGenreFK($(this));">
+        @foreach (var item in Model)
+        {
+            <option data-genreid="@item.GenreFK" value="@item.MovieID">@item.MovieName</option>
+        }
+    </select>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    function getGenreFK(gfk)
+    {
+        var genreId = $('option:selected', $(gfk)).attr('data-genreid');
+        var genreList = $(gfk).parent().parent().parent().find(".SelectGenre");
+        $(genreList).val(genreId);
+
+        //$(".movieidholder").val($(gfk).val());
+        //find the exact posiioin of ".movieidholder" onchange
+        var movieid = $(gfk).parent().parent().find(".movieidholder");
+        $(movieid).val($(gfk).val());
+        
+        //$('#newMovieIdholder').val($(gfk).val());
+        if (parseInt($(gfk).parent().parent().find('.movieid').text()) === 0) {
+            //***jQuery push multiple values in input tag
+            var oldValue = $('#newMovieIdholder').val();
+            var arr = oldValue === "" ? [] : oldValue.split(',');
+            arr.push($(gfk).val());
+            var newValue = arr.join(',');
+            jQuery('#newMovieIdholder').val(newValue);
+        }
+        
+    }
+</script>

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<sp_VideoRental.Models.SELECTRented_Result>
+
+@{
+    ViewBag.Title = "Rented";
+}
+
+<h2>Rented</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MovieName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GenreName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateReturned)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MovieName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GenreName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateReturned)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VideoRentalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Genre">
+    <Key>
+      <PropertyRef Name="GenreID" />
+    </Key>
+    <Property Name="GenreID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GenreName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Movy">
+    <Key>
+      <PropertyRef Name="MovieID" />
+    </Key>
+    <Property Name="MovieID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MovieName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GenreFK" Type="Int32" />
+    <Property Name="CustomerFK" Type="Int32" />
+  </EntityType>
+  <EntityType Name="RentalHeader">
+    <Key>
+      <PropertyRef Name="RentalID" />
+    </Key>
+    <Property Name="RentalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerFK" Type="Int32" />
+    <Property Name="DateRented" Type="DateTime" Precision="3" />
+    <Property Name="MovieFK" Type="Int32" />
+    <Property Name="DateReturned" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="RentedMovy">
+    <Key>
+      <PropertyRef Name="RentedID" />
+    </Key>
+    <Property Name="RentedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MovieFK" Type="Int32" />
+    <Property Name="DateReturned" Type="DateTime" Precision="3" />
+    <Property Name="RentalFK" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="VideoRentalEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Genres" EntityType="Self.Genre" />
+    <EntitySet Name="Movies" EntityType="Self.Movy" />
+    <EntitySet Name="RentalHeaders" EntityType="Self.RentalHeader" />
+    <EntitySet Name="RentedMovies" EntityType="Self.RentedMovy" />
+    <FunctionImport Name="DisplayRecords" ReturnType="Collection(VideoRentalModel.DisplayRecords_Result)" />
+    <FunctionImport Name="SELECTCustomers" ReturnType="Collection(String)">
+      <Parameter Name="CustomerFK" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SELECTRentalHeader" ReturnType="Collection(VideoRentalModel.SELECTRentalHeader_Result)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SELECTRented" ReturnType="Collection(VideoRentalModel.SELECTRented_Result)">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SELECTMovies" ReturnType="Collection(VideoRentalModel.SELECTMovies_Result)">
+      <Parameter Name="MovieId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SELECTGenres" ReturnType="Collection(VideoRentalModel.SELECTGenres_Result)" />
+    <FunctionImport Name="UPDATERentalHeader">
+      <Parameter Name="RentalID" Mode="In" Type="Int32" />
+      <Parameter Name="CustomerFK" Mode="In" Type="Int32" />
+      <Parameter Name="DateRented" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="UPDATERentedMovies">
+      <Parameter Name="RentedID" Mode="In" Type="Int32" />
+      <Parameter Name="MovieFK" Mode="In" Type="Int32" />
+      <Parameter Name="DateReturned" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="INSERTRentalHeader">
+      <Parameter Name="CustomerFK" Mode="In" Type="Int32" />
+      <Parameter Name="DateRented" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="INSERTRentedMovies">
+      <Parameter Name="MovieFK" Mode="In" Type="Int32" />
+      <Parameter Name="DateReturned" Mode="In" Type="DateTime" />
+      <Parameter Name="RentalFK" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DELETERentedMovies">
+      <Parameter Name="RentedID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DELETERentalHeader">
+      <Parameter Name="RentalID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DELETERentedMoviesbyRentalFK">
+      <Parameter Name="RentalFK" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="DisplayRecords_Result">
+    <Property Type="Int32" Name="RentalID" Nullable="false" />
+    <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="DateRented" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SELECTRentalHeader_Result">
+    <Property Type="Int32" Name="RentalID" Nullable="false" />
+    <Property Type="Int32" Name="CustomerFK" Nullable="true" />
+    <Property Type="DateTime" Name="DateRented" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="MovieFK" Nullable="true" />
+    <Property Type="DateTime" Name="DateReturned" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SELECTRented_Result">
+    <Property Type="String" Name="MovieName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="GenreName" Nullable="true" MaxLength="100" />
+    <Property Type="DateTime" Name="DateReturned" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="SELECTMovies_Result">
+    <Property Type="Int32" Name="MovieID" Nullable="false" />
+    <Property Type="String" Name="MovieName" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="GenreFK" Nullable="true" />
+    <Property Type="Int32" Name="CustomerFK" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="SELECTGenres_Result">
+    <Property Type="Int32" Name="GenreID" Nullable="false" />
+    <Property Type="String" Name="GenreName" Nullable="true" MaxLength="100" />
+  </ComplexType>
+</Schema>

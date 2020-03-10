@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VideoRentalModelStoreContainer" CdmEntityContainer="VideoRentalEntities">
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="VideoRentalModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genres">
+      <EntityTypeMapping TypeName="VideoRentalModel.Genre">
+        <MappingFragment StoreEntitySet="Genres">
+          <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+          <ScalarProperty Name="GenreName" ColumnName="GenreName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movies">
+      <EntityTypeMapping TypeName="VideoRentalModel.Movy">
+        <MappingFragment StoreEntitySet="Movies">
+          <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+          <ScalarProperty Name="MovieName" ColumnName="MovieName" />
+          <ScalarProperty Name="GenreFK" ColumnName="GenreFK" />
+          <ScalarProperty Name="CustomerFK" ColumnName="CustomerFK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RentalHeaders">
+      <EntityTypeMapping TypeName="VideoRentalModel.RentalHeader">
+        <MappingFragment StoreEntitySet="RentalHeader">
+          <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+          <ScalarProperty Name="CustomerFK" ColumnName="CustomerFK" />
+          <ScalarProperty Name="DateRented" ColumnName="DateRented" />
+          <ScalarProperty Name="MovieFK" ColumnName="MovieFK" />
+          <ScalarProperty Name="DateReturned" ColumnName="DateReturned" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RentedMovies">
+      <EntityTypeMapping TypeName="VideoRentalModel.RentedMovy">
+        <MappingFragment StoreEntitySet="RentedMovies">
+          <ScalarProperty Name="RentedID" ColumnName="RentedID" />
+          <ScalarProperty Name="MovieFK" ColumnName="MovieFK" />
+          <ScalarProperty Name="DateReturned" ColumnName="DateReturned" />
+          <ScalarProperty Name="RentalFK" ColumnName="RentalFK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="DisplayRecords" FunctionName="VideoRentalModel.Store.DisplayRecords">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VideoRentalModel.DisplayRecords_Result">
+          <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="DateRented" ColumnName="DateRented" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SELECTCustomers" FunctionName="VideoRentalModel.Store.SELECTCustomers" />
+    <FunctionImportMapping FunctionImportName="SELECTRentalHeader" FunctionName="VideoRentalModel.Store.SELECTRentalHeader">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VideoRentalModel.SELECTRentalHeader_Result">
+          <ScalarProperty Name="RentalID" ColumnName="RentalID" />
+          <ScalarProperty Name="CustomerFK" ColumnName="CustomerFK" />
+          <ScalarProperty Name="DateRented" ColumnName="DateRented" />
+          <ScalarProperty Name="MovieFK" ColumnName="MovieFK" />
+          <ScalarProperty Name="DateReturned" ColumnName="DateReturned" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SELECTRented" FunctionName="VideoRentalModel.Store.SELECTRented">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VideoRentalModel.SELECTRented_Result">
+          <ScalarProperty Name="MovieName" ColumnName="MovieName" />
+          <ScalarProperty Name="GenreName" ColumnName="GenreName" />
+          <ScalarProperty Name="DateReturned" ColumnName="DateReturned" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SELECTMovies" FunctionName="VideoRentalModel.Store.SELECTMovies">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VideoRentalModel.SELECTMovies_Result">
+          <ScalarProperty Name="MovieID" ColumnName="MovieID" />
+          <ScalarProperty Name="MovieName" ColumnName="MovieName" />
+          <ScalarProperty Name="GenreFK" ColumnName="GenreFK" />
+          <ScalarProperty Name="CustomerFK" ColumnName="CustomerFK" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SELECTGenres" FunctionName="VideoRentalModel.Store.SELECTGenres">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VideoRentalModel.SELECTGenres_Result">
+          <ScalarProperty Name="GenreID" ColumnName="GenreID" />
+          <ScalarProperty Name="GenreName" ColumnName="GenreName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="UPDATERentalHeader" FunctionName="VideoRentalModel.Store.UPDATERentalHeader" />
+    <FunctionImportMapping FunctionImportName="UPDATERentedMovies" FunctionName="VideoRentalModel.Store.UPDATERentedMovies" />
+    <FunctionImportMapping FunctionImportName="INSERTRentalHeader" FunctionName="VideoRentalModel.Store.INSERTRentalHeader" />
+    <FunctionImportMapping FunctionImportName="INSERTRentedMovies" FunctionName="VideoRentalModel.Store.INSERTRentedMovies" />
+    <FunctionImportMapping FunctionImportName="DELETERentedMovies" FunctionName="VideoRentalModel.Store.DELETERentedMovies" />
+    <FunctionImportMapping FunctionImportName="DELETERentalHeader" FunctionName="VideoRentalModel.Store.DELETERentalHeader" />
+    <FunctionImportMapping FunctionImportName="DELETERentedMoviesbyRentalFK" FunctionName="VideoRentalModel.Store.DELETERentedMoviesbyRentalFK" />
+  </EntityContainerMapping>
+</Mapping>

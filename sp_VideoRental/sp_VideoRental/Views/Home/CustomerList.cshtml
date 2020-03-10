@@ -1,0 +1,22 @@
+﻿@model IEnumerable<sp_VideoRental.Models.SELECTCustomer>
+
+<div style="position:relative; width:100%; height:100%">
+    <select id="CustomerName" class="form-control" onchange="getCustomerId($(this));">
+        @foreach (var item in Model)
+        {
+            <option value="@item.CustomerID">@item.CustomerName</option>
+        }
+    </select>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready(function () {
+        $("#CustomerName").val($(".customerid").text());
+    });
+
+    function getCustomerId(cId) {
+        $("#CustomerFK").val($(cId).val());
+    }
+</script>

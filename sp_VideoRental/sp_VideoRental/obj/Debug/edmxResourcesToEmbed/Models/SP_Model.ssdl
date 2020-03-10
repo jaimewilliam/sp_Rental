@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VideoRentalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Genres">
+    <Key>
+      <PropertyRef Name="GenreID" />
+    </Key>
+    <Property Name="GenreID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GenreName" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Movies">
+    <Key>
+      <PropertyRef Name="MovieID" />
+    </Key>
+    <Property Name="MovieID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MovieName" Type="nvarchar" MaxLength="100" />
+    <Property Name="GenreFK" Type="int" />
+    <Property Name="CustomerFK" Type="int" />
+  </EntityType>
+  <EntityType Name="RentalHeader">
+    <Key>
+      <PropertyRef Name="RentalID" />
+    </Key>
+    <Property Name="RentalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerFK" Type="int" />
+    <Property Name="DateRented" Type="datetime" />
+    <Property Name="MovieFK" Type="int" />
+    <Property Name="DateReturned" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RentedMovies">
+    <Key>
+      <PropertyRef Name="RentedID" />
+    </Key>
+    <Property Name="RentedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MovieFK" Type="int" />
+    <Property Name="DateReturned" Type="datetime" />
+    <Property Name="RentalFK" Type="int" />
+  </EntityType>
+  <Function Name="DELETERentalHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RentalID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DELETERentedMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RentedID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DELETERentedMoviesbyRentalFK" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RentalFK" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DisplayRecords" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="INSERTRentalHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerFK" Type="int" Mode="In" />
+    <Parameter Name="DateRented" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="INSERTRentedMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MovieFK" Type="int" Mode="In" />
+    <Parameter Name="DateReturned" Type="datetime" Mode="In" />
+    <Parameter Name="RentalFK" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SELECTCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerFK" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SELECTGenres" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SELECTMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MovieId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SELECTRentalHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SELECTRented" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="UPDATERentalHeader" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RentalID" Type="int" Mode="In" />
+    <Parameter Name="CustomerFK" Type="int" Mode="In" />
+    <Parameter Name="DateRented" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="UPDATERentedMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="RentedID" Type="int" Mode="In" />
+    <Parameter Name="MovieFK" Type="int" Mode="In" />
+    <Parameter Name="DateReturned" Type="datetime" Mode="In" />
+  </Function>
+  <EntityContainer Name="VideoRentalModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Movies" EntityType="Self.Movies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentalHeader" EntityType="Self.RentalHeader" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RentedMovies" EntityType="Self.RentedMovies" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
